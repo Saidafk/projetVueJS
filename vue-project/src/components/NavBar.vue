@@ -5,14 +5,12 @@ import { RouterLink } from 'vue-router'
 <template>
   <nav class="navbar">
     <div class="navbar-brand">
-      <RouterLink to="/" class="brand-link">Mon App</RouterLink>
+      <RouterLink to="/" class="brand-link">CinéList</RouterLink>
     </div>
     <div class="navbar-links">
       <RouterLink to="/" class="nav-link">Accueil</RouterLink>
-      <RouterLink to="/test1" class="nav-link">Test 1</RouterLink>
-      <RouterLink to="/test2" class="nav-link">Test 2</RouterLink>
-      <RouterLink to="/test3" class="nav-link">Test 3</RouterLink>
-      <RouterLink to="/test4" class="nav-link">Test 4</RouterLink>
+      <RouterLink to="/watchlist" class="nav-link">Watchlist</RouterLink>
+      <RouterLink to="/favoris" class="nav-link">Favoris</RouterLink>
       <RouterLink to="/about" class="nav-link">À propos</RouterLink>
     </div>
   </nav>
@@ -20,7 +18,7 @@ import { RouterLink } from 'vue-router'
 
 <style scoped>
 .navbar {
-  background-color: #333;
+  background-color: #1a1a1a;
   color: white;
   padding: 1rem 2rem;
   display: flex;
@@ -28,36 +26,38 @@ import { RouterLink } from 'vue-router'
   align-items: center;
   width: 100%;
   box-sizing: border-box;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
 }
 
 .brand-link {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: white;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #e50914; /* Rouge style cinéma */
   text-decoration: none;
-  white-space: nowrap; /* Empêche le titre d'aller à la ligne */
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 .navbar-links {
   display: flex;
-  gap: 1.5rem;
-  flex-wrap: nowrap; /* Empêche les liens d'aller à la ligne */
+  gap: 2rem;
 }
 
 .nav-link {
-  color: #ccc;
+  color: #e5e5e5;
   text-decoration: none;
-  font-size: 1rem;
-  transition: color 0.3s;
-  white-space: nowrap;
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: color 0.3s, transform 0.2s;
 }
 
 .nav-link:hover {
-  color: white;
+  color: #ffffff;
+  transform: translateY(-2px);
 }
 
 .nav-link.router-link-active {
-  color: #42b983;
-  font-weight: bold;
+  color: #e50914;
+  border-bottom: 2px solid #e50914;
 }
 </style>
