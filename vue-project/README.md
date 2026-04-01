@@ -8,7 +8,9 @@ CinéList est une application web moderne construite avec **Vue.js 3** qui perme
 - **Pagination** : Navigation fluide de 10 en 10 à travers le catalogue complet.
 - **Watchlist Persistante** : Ajoutez des films à votre liste de visionnage. Vos choix sont sauvegardés même après la fermeture du navigateur.
 - **Favoris** : Marquez vos coups de cœur d'une étoile pour les retrouver instantanément dans un onglet dédié.
-- **Notifications (Toasts)** : Système de confirmation visuel lors de l'ajout d'un film.
+- **Critiques Multi-étapes** : Rédigez des avis détaillés via un formulaire en 3 étapes (Note, Commentaire, Récapitulatif) avec possibilité de retour arrière.
+- **Galerie de Critiques** : Un onglet dédié pour consulter l'ensemble de vos avis rédigés, avec images et notes.
+- **Notifications (Toasts)** : Système de confirmation visuel lors des ajouts.
 - **Design Immersif** : Interface sombre type "Dark Mode" optimisée pour le confort visuel.
 
 ## 🛠️ Installation
