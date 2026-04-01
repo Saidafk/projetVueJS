@@ -12,6 +12,7 @@ import { RouterLink } from 'vue-router'
       <RouterLink to="/decouvrir" class="nav-link">Découvrir</RouterLink>
       <RouterLink to="/watchlist" class="nav-link">Watchlist</RouterLink>
       <RouterLink to="/favoris" class="nav-link">Favoris</RouterLink>
+      <RouterLink to="/critiques" class="nav-link">Critiques</RouterLink>
       <RouterLink to="/about" class="nav-link">À propos</RouterLink>
     </div>
   </nav>
@@ -28,6 +29,9 @@ import { RouterLink } from 'vue-router'
   width: 100%;
   box-sizing: border-box;
   box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .brand-link {
@@ -41,13 +45,13 @@ import { RouterLink } from 'vue-router'
 
 .navbar-links {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .nav-link {
   color: #e5e5e5;
   text-decoration: none;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 500;
   transition: color 0.3s, transform 0.2s;
 }
@@ -60,5 +64,18 @@ import { RouterLink } from 'vue-router'
 .nav-link.router-link-active {
   color: #e50914;
   border-bottom: 2px solid #e50914;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  .navbar-links {
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 </style>
