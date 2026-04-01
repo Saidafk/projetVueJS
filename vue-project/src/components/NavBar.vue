@@ -9,6 +9,7 @@ import { RouterLink } from 'vue-router'
     </div>
     <div class="navbar-links">
       <RouterLink to="/" class="nav-link">Accueil</RouterLink>
+      <RouterLink to="/decouvrir" class="nav-link">Découvrir</RouterLink>
       <RouterLink to="/watchlist" class="nav-link">Watchlist</RouterLink>
       <RouterLink to="/favoris" class="nav-link">Favoris</RouterLink>
       <RouterLink to="/about" class="nav-link">À propos</RouterLink>
@@ -32,7 +33,7 @@ import { RouterLink } from 'vue-router'
 .brand-link {
   font-size: 1.8rem;
   font-weight: 800;
-  color: #e50914; /* Rouge style cinéma */
+  color: #e50914;
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 2px;
