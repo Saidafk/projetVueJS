@@ -1,44 +1,35 @@
-# vue-project
+# 🎬 CinéList
 
-This template should help get you started developing with Vue 3 in Vite.
+CinéList est une application web moderne construite avec **Vue.js 3** qui permet d'explorer, de rechercher et d'organiser vos films et séries préférés.
 
-## Recommended IDE Setup
+## 🚀 Fonctionnalités Terminéés
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **Découverte Massive** : Explorez plus de 1000 titres récupérés dynamiquement via l'API TVMaze.
+- **Pagination** : Navigation fluide de 10 en 10 à travers le catalogue complet.
+- **Watchlist Persistante** : Ajoutez des films à votre liste de visionnage. Vos choix sont sauvegardés même après la fermeture du navigateur.
+- **Favoris** : Marquez vos coups de cœur d'une étoile pour les retrouver instantanément dans un onglet dédié.
+- **Notifications (Toasts)** : Système de confirmation visuel lors de l'ajout d'un film.
+- **Design Immersif** : Interface sombre type "Dark Mode" optimisée pour le confort visuel.
 
-## Recommended Browser Setup
+## 🛠️ Installation
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+1. Clonez le dépôt :
+   ```bash
+   git clone <url-du-depot>
+   ```
+2. Installez les dépendances :
+   ```bash
+   npm install
+   ```
+3. Lancez le serveur de développement :
+   ```bash
+   npm run dev
+   ```
 
-## Customize configuration
+## 📚 Documentation
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+Pour une explication détaillée de la structure technique et de la gestion des données, consultez le fichier [DOC.md](./DOC.md).
 
-## Project Setup
+## 📄 Licence
 
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
+Projet réalisé dans le cadre d'un apprentissage de Vue.js.

@@ -1,13 +1,21 @@
 const BASE_URL = 'https://api.tvmaze.com';
 
-export const getAllMovies = async () => {
+export const getAllMovies = async (maxPages = 4) => {
   try {
-    const response = await fetch(`${BASE_URL}/shows`);
-    if (!response.ok) throw new Error('Erreur lors de la récupération des données');
+    let allData = [];
     
-    const data = await response.json();
+    // On boucle pour récupérer plusieurs pages (chaque page = 250 films)
+    for (let i = 0; i < maxPages; i++) {
+      const response = await fetch(`${BASE_URL}/shows?page=${i}`);
+      if (!response.ok) break;
+      
+      const data = await response.json();
+      if (data.length === 0) break;
+      
+      allData = [...allData, ...data];
+    }
     
-    return data.map(item => ({
+    return allData.map(item => ({
       id: item.id,
       title: item.name,
       image: item.image ? item.image.medium : 'https://via.placeholder.com/210x295?text=Pas+d%27image',
