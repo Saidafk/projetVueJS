@@ -38,3 +38,14 @@ jobs:
           target: "/var/www/cinelist/"
           strip_components: 2
           rm: true
+
+      - name: 🧹 Nettoyage et Droits sur le VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            sudo chown -R www-data:www-data /var/www/cinelist
+            sudo chmod -R 755 /var/www/cinelist
+            sudo systemctl reload nginx
