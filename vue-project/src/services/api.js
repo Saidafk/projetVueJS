@@ -4,7 +4,6 @@ export const getAllMovies = async (maxPages = 4) => {
   try {
     let allData = [];
     
-    // On boucle pour récupérer plusieurs pages (chaque page = 250 films)
     for (let i = 0; i < maxPages; i++) {
       const response = await fetch(`${BASE_URL}/shows?page=${i}`);
       if (!response.ok) break;
