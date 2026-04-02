@@ -52,7 +52,6 @@ const getStarRating = (rating) => {
   padding: 3rem 2rem;
   background-color: #121212;
   color: #fff;
-  min-height: 100vh;
 }
 
 .container {
