@@ -10,6 +10,7 @@ CinéList est une application web moderne construite avec **Vue.js 3** qui perme
 - **Favoris** : Marquez vos coups de cœur d'une étoile pour les retrouver instantanément dans un onglet dédié.
 - **Critiques Multi-étapes** : Rédigez des avis détaillés via un formulaire en 3 étapes (Note, Commentaire, Récapitulatif) avec possibilité de retour arrière.
 - **Galerie de Critiques** : Un onglet dédié pour consulter l'ensemble de vos avis rédigés, avec images et notes.
+- **GéoLocalisation (Nouveau)** : Trouvez les cinémas à proximité grâce à l'API officielle du Ministère de la Culture (CNC) et votre position GPS.
 - **Notifications (Toasts)** : Système de confirmation visuel lors des ajouts.
 - **Design Immersif** : Interface sombre type "Dark Mode" optimisée pour le confort visuel.
 
