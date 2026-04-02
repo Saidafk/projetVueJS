@@ -1,61 +1,37 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { fetchNearbyCinemas, getUserLocation } from '../services/geo';
 
 const location = ref(null);
 const cinemas = ref([]);
 const loading = ref(false);
 const error = ref(null);
 
-const getCinemas = async (lat, lon) => {
+const searchCinemas = async () => {
   loading.value = true;
   error.value = null;
-  
-  // Rayon de recherche : 10km (0.1 degré environ)
-  const radius = 0.1; 
-  const query = `
-    [out:json];
-    node["amenity"="cinema"](
-      ${lat - radius},${lon - radius},
-      ${lat + radius},${lon + radius}
-    );
-    out body;
-  `;
 
   try {
-    const response = await fetch(`https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`);
-    const data = await response.json();
-    cinemas.value = data.elements || [];
+    // 1. Obtenir la position
+    const coords = await getUserLocation();
+    location.value = coords;
+
+    // 2. Chercher les cinémas
+    cinemas.value = await fetchNearbyCinemas(coords.lat, coords.lon);
   } catch (err) {
-    error.value = "Impossible de récupérer les cinémas à proximité.";
-    console.error(err);
+    if (err.code === 1) {
+      error.value = "Veuillez autoriser l'accès à votre position pour voir les cinémas.";
+    } else {
+      error.value = "Une erreur est survenue lors de la recherche des cinémas.";
+    }
+    console.error("Erreur Géo:", err);
   } finally {
     loading.value = false;
   }
 };
 
-const locateUser = () => {
-  if (!navigator.geolocation) {
-    error.value = "La géolocalisation n'est pas supportée par votre navigateur.";
-    return;
-  }
-
-  loading.value = true;
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-      const { latitude, longitude } = position.coords;
-      location.value = { lat: latitude, lon: longitude };
-      getCinemas(latitude, longitude);
-    },
-    (err) => {
-      loading.value = false;
-      error.value = "Accès à la position refusé ou indisponible.";
-      console.error(err);
-    }
-  );
-};
-
 onMounted(() => {
-  locateUser();
+  searchCinemas();
 });
 </script>
 
@@ -72,7 +48,7 @@ onMounted(() => {
 
       <div v-else-if="error" class="error-box">
         <p>⚠️ {{ error }}</p>
-        <button @click="locateUser" class="retry-btn">Réessayer</button>
+        <button @click="searchCinemas" class="retry-btn">Réessayer</button>
       </div>
 
       <div v-else-if="cinemas.length === 0 && location" class="empty-box">
@@ -83,15 +59,16 @@ onMounted(() => {
         <div v-for="cinema in cinemas" :key="cinema.id" class="cinema-card">
           <div class="icon">🎬</div>
           <div class="info">
-            <h3>{{ cinema.tags.name || 'Cinéma sans nom' }}</h3>
-            <p v-if="cinema.tags['addr:street']">
-              {{ cinema.tags['addr:housenumber'] }} {{ cinema.tags['addr:street'] }}
-            </p>
-            <p v-if="cinema.tags['addr:city']">{{ cinema.tags['addr:city'] }}</p>
+            <div class="header-cinema">
+              <h3>{{ cinema.name }}</h3>
+              <span v-if="cinema.screens" class="badge">{{ cinema.screens }} salles</span>
+            </div>
+            <p>{{ cinema.address }}</p>
+            <p>{{ cinema.zip }} {{ cinema.city }}</p>
             <a :href="`https://www.google.com/maps/search/?api=1&query=${cinema.lat},${cinema.lon}`" 
                target="_blank" 
                class="map-link">
-               Voir sur la carte →
+               S'y rendre →
             </a>
           </div>
         </div>
@@ -101,7 +78,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.cinemas-page { padding: 3rem 2rem; background-color: #121212; color: #fff; min-height: 100vh; }
+.cinemas-page { padding: 3rem 2rem; background-color: #121212; color: #fff;}
 .container { max-width: 800px; margin: 0 auto; }
 h1 { font-size: 2.5rem; color: #42b983; margin-bottom: 0.5rem; text-align: center; }
 .subtitle { text-align: center; color: #888; margin-bottom: 3rem; }
