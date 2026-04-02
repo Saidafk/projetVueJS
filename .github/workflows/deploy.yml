@@ -18,16 +18,15 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-          # On précise où se trouve le package-lock.json pour le cache
           cache-dependency-path: vue-project/package-lock.json
 
       - name: 📦 Installation des dépendances
-        working-directory: ./vue-project
         run: npm install
+        working-directory: ./vue-project
 
       - name: 🏗️ Build de l'application
-        working-directory: ./vue-project
         run: npm run build
+        working-directory: ./vue-project
 
       - name: 🚀 Déploiement vers le VPS via SCP
         uses: appleboy/scp-action@master
@@ -35,18 +34,8 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          # On prend le dossier dist qui est dans vue-project
+          # On s'assure de bien pointer vers le contenu du build
           source: "vue-project/dist/*"
-          target: "/var/www/cinelist/"
-          strip_components: 2 # On enlève "vue-project" et "dist" du chemin final
-
-      - name: 🧹 Nettoyage et Droits sur le VPS
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            sudo chown -R www-data:www-data /var/www/cinelist
-            sudo chmod -R 755 /var/www/cinelist
-            sudo systemctl reload nginx
+          target: "/var/www/cinelist"
+          strip_components: 2
+          rm: true

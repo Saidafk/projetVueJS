@@ -1,6 +1,5 @@
 @import './base.css';
 
-/* Test CI/CD Deployment - Retry #2 - 1 avril 2026 21:45 */
 #app {
   width: 100%;
   margin: 0;
@@ -14,3 +13,5 @@ a,
   color: hsla(160, 100%, 37%, 1);
   transition: 0.4s;
 }
+
+
