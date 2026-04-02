@@ -48,4 +48,3 @@ jobs:
           script: |
             sudo chown -R www-data:www-data /var/www/cinelist
             sudo chmod -R 755 /var/www/cinelist
-            sudo systemctl reload nginx
