@@ -1,5 +1,21 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+import { ref, onMounted } from 'vue'
+import { getFavoris } from '../services/storage'
+
+const favCount = ref(0)
+
+const updateFavCount = () => {
+  favCount.value = getFavoris().length
+}
+
+onMounted(() => {
+  updateFavCount()
+  // On surveille le localStorage pour mettre à jour le badge si l'utilisateur ajoute un favori
+  window.addEventListener('storage', updateFavCount)
+  // On check toutes les secondes pour plus de réactivité (car 'storage' event ne marche que entre onglets différents)
+  setInterval(updateFavCount, 1000)
+})
 </script>
 
 <template>
@@ -11,7 +27,10 @@ import { RouterLink } from 'vue-router'
       <RouterLink to="/" class="nav-link">Accueil</RouterLink>
       <RouterLink to="/decouvrir" class="nav-link">Découvrir</RouterLink>
       <RouterLink to="/watchlist" class="nav-link">Watchlist</RouterLink>
-      <RouterLink to="/favoris" class="nav-link">Favoris</RouterLink>
+      <RouterLink to="/favoris" class="nav-link">
+        Favoris
+        <span v-if="favCount > 0" class="badge">{{ favCount }}</span>
+      </RouterLink>
       <RouterLink to="/critiques" class="nav-link">Critiques</RouterLink>
       <RouterLink to="/cinemas" class="nav-link">Cinémas</RouterLink>
       <RouterLink to="/about" class="nav-link">À propos</RouterLink>
@@ -47,6 +66,7 @@ import { RouterLink } from 'vue-router'
 .navbar-links {
   display: flex;
   gap: 1.5rem;
+  align-items: center;
 }
 
 .nav-link {
@@ -55,6 +75,21 @@ import { RouterLink } from 'vue-router'
   font-size: 1rem;
   font-weight: 500;
   transition: color 0.3s, transform 0.2s;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badge {
+  background-color: #e50914;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 10px;
+  min-width: 14px;
+  text-align: center;
 }
 
 .nav-link:hover {
@@ -67,7 +102,7 @@ import { RouterLink } from 'vue-router'
   border-bottom: 2px solid #e50914;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
   .navbar {
     flex-direction: column;
     gap: 1rem;

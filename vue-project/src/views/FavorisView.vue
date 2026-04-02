@@ -1,6 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { getFavoris, removeFromFavoris, saveReview, getReviewByMovie } from '../services/storage';
+import Button from 'primevue/button';
+import Rating from 'primevue/rating';
 
 const favoris = ref([]);
 const isModalOpen = ref(false);
@@ -122,9 +124,7 @@ const submitReview = () => {
           <div v-if="currentStep === 1" class="step-content">
             <h3>Étape 1 : Quelle note donneriez-vous ?</h3>
             <div class="rating-input">
-              <span v-for="i in 5" :key="i" 
-                    @click="reviewData.rating = i"
-                    :class="['star', { filled: i <= reviewData.rating }]">★</span>
+              <Rating v-model="reviewData.rating" :stars="5" :cancel="false" />
             </div>
             <p class="rating-text">{{ reviewData.rating }} / 5</p>
           </div>
@@ -150,9 +150,9 @@ const submitReview = () => {
           </div>
 
           <footer class="modal-footer">
-            <button v-if="currentStep > 1" @click="prevStep" class="btn-secondary">Précédent</button>
-            <button v-if="currentStep < 3" @click="nextStep" class="btn-primary" :disabled="currentStep === 2 && !reviewData.comment">Suivant</button>
-            <button v-if="currentStep === 3" @click="submitReview" class="btn-success">Publier ma critique</button>
+            <Button v-if="currentStep > 1" @click="prevStep" label="Précédent" severity="secondary" />
+            <Button v-if="currentStep < 3" @click="nextStep" label="Suivant" :disabled="currentStep === 2 && !reviewData.comment" />
+            <Button v-if="currentStep === 3" @click="submitReview" label="Publier ma critique" severity="success" />
           </footer>
         </div>
       </div>

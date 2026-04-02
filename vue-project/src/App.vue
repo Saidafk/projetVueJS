@@ -7,7 +7,11 @@ import NavBar from './components/NavBar.vue'
   <div class="app-container">
     <NavBar />
     <main class="app-content">
-      <RouterView />
+      <RouterView v-slot="{ Component }">
+        <transition name="page-fade" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </RouterView>
     </main>
   </div>
 </template>
@@ -18,9 +22,25 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Inter', sans-serif;
-  background-color: #121212; /* Fond très sombre */
-  color: #ffffff; /* Texte blanc par défaut */
+  background-color: #121212; 
+  color: #ffffff;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Animation de transition de page */
+.page-fade-enter-active,
+.page-fade-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.page-fade-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.page-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
 }
 
 #app {
