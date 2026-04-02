@@ -28,16 +28,13 @@ jobs:
         working-directory: ./vue-project
         run: npm run build
 
-      - name: 🧹 Nettoyage et Droits sur le VPS
+      - name: 🧹 Nettoyage sur le VPS
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            sudo chown -R ${{ secrets.SSH_USER }}:${{ secrets.SSH_USER }} /var/www/cinelist
-            sudo chmod -R 755 /var/www/cinelist
-            # On vide le dossier ici, AVANT le scp-action
             rm -rf /var/www/cinelist/*
 
       - name: 📤 Déploiement via SCP
@@ -48,7 +45,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "vue-project/dist/*"
           target: "/var/www/cinelist/"
-          strip_components: 2  # supprime "vue-project/dist" du chemin
+          strip_components: 2
+          rm: false
 
       - name: 🔄 Rechargement Nginx
         uses: appleboy/ssh-action@master
