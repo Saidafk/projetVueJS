@@ -1,7 +1,0 @@
-services:
-  cinelist:
-    build: .
-    container_name: cinelist
-    ports:
-      - "8080:8080"
-    restart: unless-stopped
