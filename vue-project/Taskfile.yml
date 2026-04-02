@@ -1,0 +1,42 @@
+version: "3"
+
+vars:
+  DOCKER_COMPOSE: "docker compose -f deploy/docker-compose.yml"
+
+tasks:
+  setup:
+    desc: Install go-task CLI globally via npm
+    cmds:
+      - npm install -g @go-task/cli
+
+  build:
+    desc: Build the app and Docker image
+    cmds:
+      - npm install --legacy-peer-deps
+      - npm run build
+      - docker build -f deploy/Dockerfile -t cinelist .
+
+  up:
+    desc: Build and start containers (detached)
+    cmds:
+      - ${DOCKER_COMPOSE} up --build -d
+
+  down:
+    desc: Stop and remove containers
+    cmds:
+      - ${DOCKER_COMPOSE} down
+
+  logs:
+    desc: Follow logs
+    cmds:
+      - ${DOCKER_COMPOSE} logs -f
+
+  rebuild:
+    desc: Rebuild image and restart
+    cmds:
+      - ${DOCKER_COMPOSE} up --build -d --force-recreate
+
+  clean:
+    desc: Remove dangling images and unused resources
+    cmds:
+      - docker system prune -f
