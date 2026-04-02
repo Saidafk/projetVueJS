@@ -28,6 +28,16 @@ jobs:
         working-directory: ./vue-project
         run: npm run build
 
+      - name: 🔧 Préparer les droits avant déploiement
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            sudo chown -R $USER:$USER /var/www/cinelist
+            sudo chmod -R 755 /var/www/cinelist
+
       - name: 🧹 Nettoyage sur le VPS
         uses: appleboy/ssh-action@master
         with:
@@ -48,11 +58,13 @@ jobs:
           strip_components: 2
           rm: false
 
-      - name: 🔄 Rechargement Nginx
+      - name: 🔄 Droits finaux et rechargement Nginx
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            sudo chown -R www-data:www-data /var/www/cinelist
+            sudo chmod -R 755 /var/www/cinelist
             sudo systemctl reload nginx
