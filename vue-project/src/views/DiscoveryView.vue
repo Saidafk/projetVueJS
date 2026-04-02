@@ -2,6 +2,7 @@
 import { ref, onMounted, computed } from 'vue';
 import { getAllMovies } from '../services/api';
 import { addToWatchlist, addToFavoris } from '../services/storage';
+import { sendNativeNotification } from '../services/notification';
 
 const allMovies = ref([]);
 const loading = ref(true);
@@ -39,6 +40,12 @@ const handleAddToWatchlist = (movie) => {
     added ? `"${movie.title}" ajouté à votre watchlist !` : `"${movie.title}" est déjà dans votre watchlist.`,
     added ? 'success' : 'info'
   );
+  if (added) {
+    sendNativeNotification("Watchlist mise à jour 🎬", {
+      body: `${movie.title} a été ajouté à votre liste de visionnage.`,
+      icon: movie.image
+    });
+  }
 };
 
 const handleAddToFavoris = (movie) => {
@@ -47,6 +54,12 @@ const handleAddToFavoris = (movie) => {
     added ? `"${movie.title}" ajouté à vos favoris !` : `"${movie.title}" est déjà dans vos favoris.`,
     added ? 'fav' : 'info'
   );
+  if (added) {
+    sendNativeNotification("Nouveau Favori ! ★", {
+      body: `Vous avez ajouté ${movie.title} à vos coups de cœur.`,
+      icon: movie.image
+    });
+  }
 };
 
 // Navigation

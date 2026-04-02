@@ -17,7 +17,7 @@ Voici l'état d'avancement des critères requis pour le projet.
 ## 📱 Ressources Internes & Web APIs
 - [x] **Stockage interne** ✅ (Gestion via `localStorage` dans `storage.js`)
 - [x] **GéoLocalisation** ✅ (Recherche des cinémas via l'API du Ministère de la Culture)
-- [⚠️] **Notifications** ⚠️ (Toasts CSS présents, mais l'API `Notification` native reste à intégrer)
+- [x] **Notifications** ✅ (Toasts CSS + API `Notification` native intégrée)
 - [ ] **Partage** ❌ (Utilisation de `navigator.share`)
 - [ ] **Contact Picker** ❌ (Utilisation de `navigator.contacts`)
 - [ ] **Touch events** ❌ (Gestion du swipe ou du long-press sur mobile)
