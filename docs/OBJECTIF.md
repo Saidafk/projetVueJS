@@ -25,13 +25,3 @@ Voici l'état d'avancement des critères requis pour le projet.
 
 ---
 
-## 💡 Notes pour la suite
-Pour valider les points manquants rapidement, je te conseille de :
-1. **Bibliothèque :** Installer `PrimeVue` pour tes boutons et modales.
-2. **Transition :** Envelopper ton `<RouterView>` dans une balise `<Transition>` dans `App.vue`.
-3. **Badge :** Ajouter un petit rond rouge sur le lien "Favoris" qui affiche `favoris.length`.
-
-## Notes récentes
-- `Partage` implémenté : bouton de partage + helper `src/services/share.js` (fallback vers le presse-papiers).
-- Badge PWA ajouté pour `favoris` et `watchlist` via `navigator.setAppBadge` et fallback titre.
-- Toaster en-app : notifications de succès (green) ; notifications système native supprimées pour l'ajout à la watchlist.
