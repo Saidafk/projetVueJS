@@ -18,6 +18,7 @@ Voici l'état d'avancement des critères requis pour le projet.
 - [x] **Stockage interne** ✅ (Gestion via `localStorage` dans `storage.js`)
 - [x] **GéoLocalisation** ✅ (Recherche des cinémas via l'API du Ministère de la Culture)
 - [x] **Notifications** ✅ (Toasts CSS + API `Notification` native intégrée)
+- [x] **PWA (Progressive Web App)** ✅ (Application installable, Service Worker et Manifest configurés)
 - [ ] **Partage** ❌ (Utilisation de `navigator.share`)
 - [ ] **Contact Picker** ❌ (Utilisation de `navigator.contacts`)
 - [ ] **Touch events** ❌ (Gestion du swipe ou du long-press sur mobile)

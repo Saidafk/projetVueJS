@@ -2,7 +2,8 @@
 import { ref, onMounted, computed } from 'vue';
 import { getAllMovies } from '../services/api';
 import { addToWatchlist, addToFavoris } from '../services/storage';
-import { sendNativeNotification } from '../services/notification';
+import { refreshWatchlistBadge } from '../services/storage';
+import { shareMovie } from '../services/share';
 
 const allMovies = ref([]);
 const loading = ref(true);
@@ -27,7 +28,7 @@ const totalPages = computed(() => {
   return Math.ceil(allMovies.value.length / itemsPerPage);
 });
 
-// Notifications
+// Notifications (Toasts CSS)
 const showNotify = (message, type = 'success') => {
   notification.value = { show: true, message, type };
   setTimeout(() => { notification.value.show = false; }, 3000);
@@ -36,15 +37,14 @@ const showNotify = (message, type = 'success') => {
 // Actions
 const handleAddToWatchlist = (movie) => {
   const added = addToWatchlist(movie);
-  showNotify(
-    added ? `"${movie.title}" ajouté à votre watchlist !` : `"${movie.title}" est déjà dans votre watchlist.`,
-    added ? 'success' : 'info'
-  );
-  if (added) {
-    sendNativeNotification("Watchlist mise à jour 🎬", {
-      body: `${movie.title} a été ajouté à votre liste de visionnage.`,
-      icon: movie.image
-    });
+  if (!added) {
+    showNotify(`"${movie.title}" est déjà dans votre watchlist.`, 'info');
+  } else {
+    // show in-app toast for successful add
+    showNotify(`"${movie.title}" ajouté à votre watchlist !`, 'success');
+
+    // Ensure badge is refreshed (call in case storage hook missed)
+    try { refreshWatchlistBadge(); } catch (e) {}
   }
 };
 
@@ -54,11 +54,16 @@ const handleAddToFavoris = (movie) => {
     added ? `"${movie.title}" ajouté à vos favoris !` : `"${movie.title}" est déjà dans vos favoris.`,
     added ? 'fav' : 'info'
   );
-  if (added) {
-    sendNativeNotification("Nouveau Favori ! ★", {
-      body: `Vous avez ajouté ${movie.title} à vos coups de cœur.`,
-      icon: movie.image
-    });
+};
+
+const handleShare = async (movie) => {
+  const result = await shareMovie(movie);
+  if (result.success && result.copied) {
+    showNotify(`Lien copié dans le presse-papiers !`, 'success');
+  } else if (result.success) {
+    showNotify(`Partage effectué.`, 'success');
+  } else {
+    showNotify(`Impossible de partager : fallback activé.`, 'info');
   }
 };
 
@@ -106,6 +111,7 @@ const goToPage = (page) => { currentPage.value = page; window.scrollTo({ top: 0,
               <div class="actions">
                 <button @click="handleAddToWatchlist(movie)" class="btn add-btn">+ Watchlist</button>
                 <button @click="handleAddToFavoris(movie)" class="btn fav-btn">★ Favoris</button>
+                <button @click="handleShare(movie)" class="btn share-btn">↗ Partager</button>
               </div>
             </div>
           </div>
@@ -128,8 +134,8 @@ const goToPage = (page) => { currentPage.value = page; window.scrollTo({ top: 0,
 
 .notification { position: fixed; top: 90px; right: 20px; padding: 1rem 2rem; border-radius: 8px; color: white; z-index: 2000; box-shadow: 0 4px 12px rgba(0,0,0,0.5); font-weight: bold; }
 .notification.success { background-color: #2ecc71; }
-.notification.fav { background-color: #f1c40f; color: #333; }
-.notification.info { background-color: #3498db; }
+.notification.fav { background-color: #c0392b; }
+.notification.info { background-color: #b03a2e; }
 
 .toast-enter-active, .toast-leave-active { transition: all 0.3s ease; }
 .toast-enter-from, .toast-leave-to { opacity: 0; transform: translateX(50px); }

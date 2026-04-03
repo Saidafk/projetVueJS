@@ -1,20 +1,19 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import { ref, onMounted } from 'vue'
-import { getFavoris } from '../services/storage'
+import { getFavoris, getWatchlist } from '../services/storage'
 
 const favCount = ref(0)
+const watchCount = ref(0)
 
-const updateFavCount = () => {
-  favCount.value = getFavoris().length
-}
+const updateFavCount = () => { favCount.value = getFavoris().length }
+const updateWatchCount = () => { watchCount.value = getWatchlist().length }
 
 onMounted(() => {
   updateFavCount()
-  // On surveille le localStorage pour mettre à jour le badge si l'utilisateur ajoute un favori
-  window.addEventListener('storage', updateFavCount)
-  // On check toutes les secondes pour plus de réactivité (car 'storage' event ne marche que entre onglets différents)
-  setInterval(updateFavCount, 1000)
+  updateWatchCount()
+  window.addEventListener('storage', () => { updateFavCount(); updateWatchCount(); })
+  setInterval(() => { updateFavCount(); updateWatchCount(); }, 1000)
 })
 </script>
 
@@ -26,7 +25,7 @@ onMounted(() => {
     <div class="navbar-links">
       <RouterLink to="/" class="nav-link">Accueil</RouterLink>
       <RouterLink to="/decouvrir" class="nav-link">Découvrir</RouterLink>
-      <RouterLink to="/watchlist" class="nav-link">Watchlist</RouterLink>
+      <RouterLink to="/watchlist" class="nav-link">Watchlist <span v-if="watchCount > 0" class="badge">{{ watchCount }}</span></RouterLink>
       <RouterLink to="/favoris" class="nav-link">
         Favoris
         <span v-if="favCount > 0" class="badge">{{ favCount }}</span>
