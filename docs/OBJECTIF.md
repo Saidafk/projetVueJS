@@ -20,8 +20,8 @@ Voici l'état d'avancement des critères requis pour le projet.
 - [x] **Notifications** ✅ (Toasts CSS + API `Notification` native intégrée)
 - [x] **PWA (Progressive Web App)** ✅ (Application installable, Service Worker et Manifest configurés)
 - [x] **Partage** ✅ (Utilisation de `navigator.share` et fallback presse-papiers)
-- [ ] **Contact Picker** ❌ (Utilisation de `navigator.contacts`)
-- [ ] **Touch events** ❌ (Gestion du swipe ou du long-press sur mobile)
+ - [ ] **Contact Picker** ❌ (Utilisation de `navigator.contacts`)
+ - [x] **Touch events** ✅ (Swipe et long-press implémentés — composants `src/components/TouchEvents.vue` pour interactions locales et `src/components/PageSwipeNavigator.vue` pour navigation par swipe entre pages)
 
 ---
 
