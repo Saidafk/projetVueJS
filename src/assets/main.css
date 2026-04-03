@@ -1,17 +1,309 @@
-@import './base.css';
+/* Fichier : src/assets/main.css */
 
-#app {
-  width: 100%;
+/* Reset et styles globaux */
+body {
   margin: 0;
   padding: 0;
-  font-weight: normal;
+  font-family: 'Inter', sans-serif;
+  background-color: #121212;
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
+/* Animation de transition de page */
+.page-fade-enter-active,
+.page-fade-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
+.page-fade-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
 
+.page-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+#app {
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+}
+
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-content {
+  flex: 1;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px 0; /* Padding vertical de base pour le contenu principal */
+}
+
+h1, h2, h3 {
+  color: #ffffff;
+}
+
+/* Styles pour les conteneurs principaux et les en-têtes */
+.container {
+  max-width: 1200px; /* Largeur maximale pour les grands écrans */
+  margin: 0 auto;
+  padding: 0 15px; /* Ajout d'un padding horizontal de base */
+  box-sizing: border-box;
+}
+
+.page-header {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+.page-header h1 {
+  font-size: 3rem; /* Taille de police plus grande pour les titres de page */
+  color: #e50914; /* Couleur spécifique pour Discovery */
+  margin-bottom: 1rem;
+}
+.page-header p {
+  color: #aaa;
+  font-size: 1.1rem;
+}
+
+/* Styles généraux des cartes de film */
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Colonnes qui s'adaptent par défaut */
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.movie-card {
+  background: #1f1f1f;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #333;
+  transition: transform 0.3s;
+}
+.movie-card:hover {
+  transform: translateY(-5px); /* Légère animation au survol */
+}
+
+.movie-poster {
+  position: relative;
+  height: 280px; /* Hauteur fixe pour l'image */
+}
+.movie-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Assure que l'image couvre bien la zone */
+}
+.movie-overlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.7);
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+}
+.rating {
+  color: #f1c40f;
+}
+
+.movie-details {
+  padding: 1.2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.movie-details h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  color: #ffffff;
+}
+.genres {
+  display: flex; gap: 5px; margin-bottom: 1rem; flex-wrap: wrap;
+}
+.genre-tag {
+  background: #333; color: #ccc; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px;
+}
+.summary {
+  font-size: 0.85rem;
+  color: #bbb;
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap; /* Permet aux boutons de passer à la ligne si nécessaire */
+}
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s;
+  font-size: 0.85rem;
+  flex-grow: 1; /* Permet aux boutons de prendre l'espace disponible */
+}
+.add-btn { background: transparent; color: #e50914; border: 1px solid #e50914; }
+.add-btn:hover { background: #e50914; color: white; }
+.fav-btn { background: transparent; color: #f1c40f; border: 1px solid #f1c40f; }
+.fav-btn:hover { background: #f1c40f; color: #333; }
+.share-btn { background: transparent; color: #42b983; border: 1px solid #42b983; }
+.share-btn:hover { background: #42b983; color: #121212; } /* Assombrir le texte pour le fond sombre */
+
+.remove-btn {
+  background: transparent;
+  color: #888;
+  border: 1px solid #444;
+  padding: 0.4rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.3s;
+}
+.remove-btn:hover {
+  background: #e50914;
+  color: white;
+  border-color: #e50914;
+}
+
+.review-btn {
+  background: #f1c40f; color: #333; border: none; padding: 0.7rem; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.3s;
+}
+.review-btn:hover { background: #d4ac0d; }
+
+
+/* --- MEDIA QUERIES POUR LA RÉACTIVITÉ --- */
+
+/* Styles de base pour petits écrans (smartphones) */
+@media (max-width: 767px) {
+  .app-content {
+    padding: 15px 0; /* Réduire le padding vertical */
+  }
+
+  .container {
+    padding: 0 15px; /* Padding horizontal plus petit */
+  }
+
+  .page-header {
+    margin-bottom: 2rem; /* Réduire la marge sous le titre de page */
+  }
+  .page-header h1 {
+    font-size: 2rem; /* Taille de police plus petite pour les titres de page */
+  }
+  .page-header p {
+    font-size: 1rem; /* Texte d'introduction plus petit */
+  }
+
+  .movie-grid {
+    grid-template-columns: 1fr; /* Empiler les cartes sur une seule colonne */
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .movie-card {
+    width: 100%;
+    max-width: 350px; /* Limiter la largeur max de la carte sur mobile */
+    margin: 0 auto; /* Centrer les cartes */
+  }
+
+  .movie-poster {
+    height: 250px; /* Adapter la hauteur de l'image */
+  }
+
+  .movie-details h3 {
+    font-size: 1rem;
+  }
+  .summary {
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .actions {
+    flex-direction: column; /* Empiler les boutons d'action */
+    gap: 10px;
+  }
+  .btn, .remove-btn, .review-btn {
+    width: 100%;
+    padding: 0.7rem; /* Ajuster le padding des boutons */
+  }
+
+  .pagination {
+    flex-wrap: wrap; /* Permettre aux boutons de pagination de passer à la ligne */
+    gap: 10px;
+  }
+  .page-btn {
+    padding: 0.6rem 1rem;
+  }
+  .page-numbers {
+    display: none; /* Cacher les numéros de page détaillés sur mobile */
+  }
+  .page-numbers-compact {
+      display: flex; /* Afficher le format compact "X / Y" */
+      justify-content: center;
+      align-items: center;
+      color: #aaa;
+      font-size: 0.9rem;
+      flex-grow: 1; /* Permettre au compact de prendre de l'espace */
+  }
+  .page-numbers-compact span { margin: 0 5px; }
+
+  /* Ajustements pour le formulaire de critique (FavorisView) */
+  .modal-content {
+    max-width: 95%; /* Plus large sur mobile */
+  }
+  .modal-header h2 {
+    font-size: 1.1rem;
+  }
+  .stepper {
+    padding: 1rem;
+  }
+  .step-dot {
+    width: 25px; height: 25px;
+  }
+  .step-line {
+    max-width: 40px;
+  }
+  .step-content {
+    padding: 1.5rem;
+  }
+  .modal-footer {
+    flex-direction: column;
+    gap: 10px;
+    padding: 1rem;
+  }
+  .btn-primary, .btn-secondary, .btn-success {
+    flex: none; /* Pas d'étirement sur mobile */
+  }
+}
+
+/* Pour les écrans tablettes (ajustements intermédiaires) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .movie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+  .movie-card {
+    max-width: 300px; /* Limiter la largeur max des cartes */
+  }
+}
+
+/* Pour les grands écrans, on peut utiliser une largeur max plus généreuse */
+@media (min-width: 1024px) {
+  .movie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+  .movie-card {
+    max-width: none; /* Pas de limite sur grands écrans */
+  }
+}
