@@ -79,3 +79,7 @@ La fonctionnalité de **Géolocalisation des Cinémas** nécessite impérativeme
 
 ## 📄 Licence
 Projet réalisé dans un but pédagogique. Utilisation libre pour l'apprentissage.
+
+## Amélioration 
+
+Passer de nginx à caddy pour avoir un certificat automatique 
