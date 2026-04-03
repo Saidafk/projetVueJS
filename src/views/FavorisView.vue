@@ -29,7 +29,30 @@ const handleRemove = (movieId) => {
   showNotify(`"${movie?.title || 'Film'}" retiré des favoris.`, 'info');
 };
 
-// ... (Gestion du formulaire)
+const reviewData = ref({
+  rating: 0,
+  comment: ''
+});
+
+const openReviewModal = (movie) => {
+  selectedMovie.value = movie;
+  const existing = getReviewByMovie(movie.id);
+  if (existing) {
+    reviewData.value = { rating: existing.rating, comment: existing.comment };
+  } else {
+    reviewData.value = { rating: 0, comment: '' };
+  }
+  currentStep.value = 1;
+  isModalOpen.value = true;
+};
+
+const closeModal = () => {
+  isModalOpen.value = false;
+  selectedMovie.value = null;
+};
+
+const nextStep = () => { if (currentStep.value < 3) currentStep.value++; };
+const prevStep = () => { if (currentStep.value > 1) currentStep.value--; };
 
 const submitReview = () => {
   saveReview(selectedMovie.value.id, {

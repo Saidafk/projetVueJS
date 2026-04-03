@@ -23,6 +23,9 @@ jobs:
       - name: 📦 Installation des dépendances
         run: npm install --legacy-peer-deps
 
+      - name: 🧪 Exécution des tests (CI)
+        run: npm run test:unit -- --run
+
       - name: 🏗️ Build de l'application
         run: npm run build
 
