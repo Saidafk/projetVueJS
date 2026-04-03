@@ -27,17 +27,19 @@ jobs:
         run: npm run build
 
       - name: 🧹 Nettoyage préalable du VPS
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            # On vide le dossier sans sudo car 'deploy' est propriétaire
+            # On s'assure que le dossier existe avant de le vider
+            mkdir -p /var/www/cinelist
+            # On vide le dossier de destination
             rm -rf /var/www/cinelist/*
 
       - name: 🚀 Déploiement vers le VPS via SCP
-        uses: appleboy/scp-action@master
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
@@ -47,7 +49,7 @@ jobs:
           strip_components: 1
 
       - name: 🔒 Ajustement final des droits
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
