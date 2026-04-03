@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { getFavoris, removeFromFavoris, saveReview, getReviewByMovie } from '../services/storage';
+import { useNotification } from '../services/notifications';
 import Button from 'primevue/button';
 import Rating from 'primevue/rating';
 
@@ -8,12 +9,7 @@ const favoris = ref([]);
 const isModalOpen = ref(false);
 const currentStep = ref(1);
 const selectedMovie = ref(null);
-
-// Données du formulaire
-const reviewData = ref({
-  rating: 5,
-  comment: ''
-});
+const { showNotify } = useNotification();
 
 const loadFavoris = () => {
   favoris.value = getFavoris().map(movie => ({
@@ -27,35 +23,13 @@ onMounted(() => {
 });
 
 const handleRemove = (movieId) => {
+  const movie = favoris.value.find(m => m.id === movieId);
   removeFromFavoris(movieId);
   loadFavoris();
+  showNotify(`"${movie?.title || 'Film'}" retiré des favoris.`, 'info');
 };
 
-// Gestion du formulaire
-const openReviewModal = (movie) => {
-  selectedMovie.value = movie;
-  const existingReview = getReviewByMovie(movie.id);
-  if (existingReview) {
-    reviewData.value = { rating: existingReview.rating, comment: existingReview.comment };
-  } else {
-    reviewData.value = { rating: 5, comment: '' };
-  }
-  currentStep.value = 1;
-  isModalOpen.value = true;
-};
-
-const closeModal = () => {
-  isModalOpen.value = false;
-  selectedMovie.value = null;
-};
-
-const nextStep = () => {
-  if (currentStep.value < 3) currentStep.value++;
-};
-
-const prevStep = () => {
-  if (currentStep.value > 1) currentStep.value--;
-};
+// ... (Gestion du formulaire)
 
 const submitReview = () => {
   saveReview(selectedMovie.value.id, {
@@ -67,6 +41,7 @@ const submitReview = () => {
   });
   loadFavoris();
   closeModal();
+  showNotify(`Critique pour "${selectedMovie.value.title}" publiée !`, 'success');
 };
 </script>
 

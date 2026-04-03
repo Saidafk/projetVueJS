@@ -1,8 +1,10 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { getWatchlist, removeFromWatchlist } from '../services/storage';
+import { useNotification } from '../services/notifications';
 
 const watchlist = ref([]);
+const { showNotify } = useNotification();
 
 const loadWatchlist = () => {
   watchlist.value = getWatchlist();
@@ -13,8 +15,10 @@ onMounted(() => {
 });
 
 const handleRemove = (movieId) => {
+  const movie = watchlist.value.find(m => m.id === movieId);
   removeFromWatchlist(movieId);
   loadWatchlist(); // On rafraîchit la liste
+  showNotify(`"${movie?.title || 'Film'}" retiré de la watchlist.`, 'info');
 };
 </script>
 

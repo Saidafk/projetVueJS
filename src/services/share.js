@@ -1,6 +1,6 @@
 export const shareMovie = async (movie) => {
-  const shareUrl = `${window.location.origin}${window.location.pathname}#/`; // fallback base
-  const url = `${shareUrl}#/movie/${movie.id}`;
+  const baseUrl = window.location.origin + window.location.pathname;
+  const url = `${baseUrl}#/movie/${movie.id}`;
   const shareData = {
     title: movie.title || 'CinéList',
     text: movie.summary ? movie.summary.slice(0, 140) : 'Découvre ce film sur CinéList',

@@ -4,10 +4,11 @@ import { getAllMovies } from '../services/api';
 import { addToWatchlist, addToFavoris } from '../services/storage';
 import { refreshWatchlistBadge } from '../services/storage';
 import { shareMovie } from '../services/share';
+import { useNotification } from '../services/notifications';
 
 const allMovies = ref([]);
 const loading = ref(true);
-const notification = ref({ show: false, message: '', type: '' });
+const { showNotify } = useNotification();
 
 // Pagination
 const currentPage = ref(1);
@@ -27,12 +28,6 @@ const paginatedMovies = computed(() => {
 const totalPages = computed(() => {
   return Math.ceil(allMovies.value.length / itemsPerPage);
 });
-
-// Notifications (Toasts CSS)
-const showNotify = (message, type = 'success') => {
-  notification.value = { show: true, message, type };
-  setTimeout(() => { notification.value.show = false; }, 3000);
-};
 
 // Actions
 const handleAddToWatchlist = (movie) => {
@@ -75,12 +70,6 @@ const goToPage = (page) => { currentPage.value = page; window.scrollTo({ top: 0,
 
 <template>
   <div class="discovery-page">
-    <Transition name="toast">
-      <div v-if="notification.show" :class="['notification', notification.type]">
-        {{ notification.message }}
-      </div>
-    </Transition>
-
     <div class="container">
       <header class="page-header">
         <h1>Découvrir des films</h1>
@@ -131,14 +120,6 @@ const goToPage = (page) => { currentPage.value = page; window.scrollTo({ top: 0,
 
 <style scoped>
 .discovery-page { padding: 3rem 2rem; background-color: #121212; color: #fff; position: relative; }
-
-.notification { position: fixed; top: 90px; right: 20px; padding: 1rem 2rem; border-radius: 8px; color: white; z-index: 2000; box-shadow: 0 4px 12px rgba(0,0,0,0.5); font-weight: bold; }
-.notification.success { background-color: #2ecc71; }
-.notification.fav { background-color: #c0392b; }
-.notification.info { background-color: #b03a2e; }
-
-.toast-enter-active, .toast-leave-active { transition: all 0.3s ease; }
-.toast-enter-from, .toast-leave-to { opacity: 0; transform: translateX(50px); }
 
 .container { max-width: 1200px; margin: 0 auto; }
 .page-header { margin-bottom: 3rem; text-align: center; }

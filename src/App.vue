@@ -1,10 +1,12 @@
 <script setup>
 import { RouterView } from 'vue-router'
 import NavBar from './components/NavBar.vue'
+import AppNotification from './components/AppNotification.vue'
 </script>
 
 <template>
   <div class="app-container">
+    <AppNotification />
     <NavBar />
     <main class="app-content">
       <RouterView v-slot="{ Component }">
