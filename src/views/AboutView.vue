@@ -1,6 +1,7 @@
 <template>
-  <div class="about-page-container">
-    <div class="about-content">
+  <PageSwipeNavigator>
+    <div class="about-page-container">
+      <div class="about-content">
       <h1 class="about-title">À Propos de CinéList</h1>
       <p class="about-description">
         Bienvenue sur CinéList, votre collection personnelle de films à voir et à ne pas oublier.
@@ -23,14 +24,16 @@
         </p>
       </section>
       <!-- Add more sections as needed, e.g., Contact, Team -->
+      </div>
     </div>
-  </div>
+  </PageSwipeNavigator>
 </template>
 
 <script>
+import PageSwipeNavigator from '../components/PageSwipeNavigator.vue'
 export default {
   name: 'AboutView',
-  // Add any component-specific logic here if needed
+  components: { PageSwipeNavigator }
 };
 </script>
 

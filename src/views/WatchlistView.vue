@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { getWatchlist, removeFromWatchlist } from '../services/storage';
 import { useNotification } from '../services/notifications';
+import PageSwipeNavigator from '../components/PageSwipeNavigator.vue'
 
 const watchlist = ref([]);
 const { showNotify } = useNotification();
@@ -23,7 +24,8 @@ const handleRemove = (movieId) => {
 </script>
 
 <template>
-  <div class="watchlist-page">
+  <PageSwipeNavigator>
+    <div class="watchlist-page">
     <div class="container">
       <h1>Ma Watchlist</h1>
       

@@ -1,9 +1,11 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+import PageSwipeNavigator from '../components/PageSwipeNavigator.vue'
 </script>
 
 <template>
-  <main class="home">
+  <PageSwipeNavigator>
+    <main class="home">
     <div class="hero">
       <h1>CinéList</h1>
       <p>Votre collection personnelle de films à voir et à ne pas oublier.</p>
@@ -24,7 +26,8 @@ import { RouterLink } from 'vue-router'
         <p>Une interface épurée pensée pour les amoureux du septième art.</p>
       </div>
     </div>
-  </main>
+    </main>
+  </PageSwipeNavigator>
 </template>
 
 <style scoped>

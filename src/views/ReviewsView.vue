@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { getReviews } from '../services/storage';
+import PageSwipeNavigator from '../components/PageSwipeNavigator.vue'
 
 const reviews = ref([]);
 
@@ -19,7 +20,8 @@ const getStarRating = (rating) => {
 </script>
 
 <template>
-  <div class="reviews-page">
+  <PageSwipeNavigator>
+    <div class="reviews-page">
     <div class="container">
       <h1>Toutes mes critiques 📝</h1>
 

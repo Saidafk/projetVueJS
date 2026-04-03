@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { fetchNearbyCinemas, getUserLocation } from '../services/geo';
+import PageSwipeNavigator from '../components/PageSwipeNavigator.vue'
 
 const location = ref(null);
 const cinemas = ref([]);
@@ -33,6 +34,11 @@ const searchCinemas = async () => {
 onMounted(() => {
   searchCinemas();
 });
+</script>
+
+<template>
+  <PageSwipeNavigator>
+    <div class="cinemas-page">
 </script>
 
 <template>
@@ -74,7 +80,8 @@ onMounted(() => {
         </div>
       </div>
     </div>
-  </div>
+    </div>
+  </PageSwipeNavigator>
 </template>
 
 <style scoped>

@@ -66,10 +66,12 @@ const handleShare = async (movie) => {
 const nextPage = () => { if (currentPage.value < totalPages.value) { currentPage.value++; window.scrollTo({ top: 0, behavior: 'smooth' }); } };
 const prevPage = () => { if (currentPage.value > 1) { currentPage.value--; window.scrollTo({ top: 0, behavior: 'smooth' }); } };
 const goToPage = (page) => { currentPage.value = page; window.scrollTo({ top: 0, behavior: 'smooth' }); };
+import PageSwipeNavigator from '../components/PageSwipeNavigator.vue'
 </script>
 
 <template>
-  <div class="discovery-page">
+  <PageSwipeNavigator>
+    <div class="discovery-page">
     <div class="container">
       <header class="page-header">
         <h1>Découvrir des films</h1>
@@ -115,7 +117,8 @@ const goToPage = (page) => { currentPage.value = page; window.scrollTo({ top: 0,
         </div>
       </div>
     </div>
-  </div>
+    </div>
+  </PageSwipeNavigator>
 </template>
 
 <style scoped>
